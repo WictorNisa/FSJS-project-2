@@ -5,22 +5,22 @@ FSJS project 2 - List Filter and Pagination
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
-const listItem = document.querySelectorAll('.student-item');
-const maxItems = 10;
+const listItem = document.querySelectorAll('li');
+const maxItems = 9;
 
   function showPage(list, page) {
     const startIndex = (page * maxItems) - maxItems;
     const endIndex = page * maxItems;
     for(let i = 0; i < list.length; i++) {
-      if(i >= startIndex && list > endIndex) {
+      if(i >= startIndex && i <= endIndex) {
         list[i].style.display = 'block';
       }
       else {
-        list[i].style.dislay = 'none';
+        list[i].style.display = 'none';
       }
     }
   }
-  showPage(listItem, 1);
+  showPage(listItem, 2);
 
 
 
