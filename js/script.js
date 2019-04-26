@@ -5,7 +5,7 @@ FSJS project 2 - List Filter and Pagination
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
-const listItem = document.querySelectorAll('li');
+const listItem = document.querySelectorAll('.student-item');
 const maxItems = 9;
 
   function showPage(list, page) {
@@ -20,9 +20,6 @@ const maxItems = 9;
       }
     }
   }
-  showPage(listItem, 2);
-
-
 
 /***
    Create the `showPage` function to hide all of the items in the
@@ -41,6 +38,17 @@ const maxItems = 9;
 
 
 function appendPageLinks(list) {
+  const divPage = document.querySelector('.page');
+  const A = document.querySelectorAll('a');
+  for(let i = 0; A.length; i++){
+    A.addEventListener('click', (e) =>{
+      A.classList.remove('active');
+      event.target.classList.add('active');
+      const aContent = A.textContent;
+      showPage(listItem, aContent);
+      console.log('connected');
+    });
+  }
   let html = `
   <div class="pagination">
     <ul>
@@ -62,7 +70,11 @@ function appendPageLinks(list) {
     </ul>
   </div>
   `;
+divPage.innerHTML = html;
 }
+
+showPage(listItem, 1);
+appendPageLinks(listItem);
 
 /***
    Create the `appendPageLinks function` to generate, append, and add
