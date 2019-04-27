@@ -1,18 +1,15 @@
-/******************************************
-Treehouse Techdegree:
-FSJS project 2 - List Filter and Pagination
-******************************************/
-
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+// Target global variables
 
 const listItem = document.querySelectorAll('.student-item');
-const maxItems = 9;
+const maxStudents = 10;
+
+// A function to show what page should be displayed
 
   function showPage(list, page) {
-    const startIndex = (page * maxItems) - maxItems;
-    const endIndex = page * maxItems;
+    const min = (page * maxStudents) - maxStudents;
+    const max = (page * maxStudents) - 1;
     for(let i = 0; i < list.length; i++) {
-      if(i >= startIndex && i <= endIndex) {
+      if(max >= i && min <= i) {
         list[i].style.display = 'block';
       }
       else {
@@ -21,68 +18,38 @@ const maxItems = 9;
     }
   }
 
-/***
-   Create the `showPage` function to hide all of the items in the
-   list except for the ten you want to show.
-
-   Pro Tips:
-     - Keep in mind that with a list of 54 students, the last page
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when
-       you initially define the function, and it acts as a variable
-       or a placeholder to represent the actual function `argument`
-       that will be passed into the parens later when you call or
-       "invoke" the function
-***/
-
+// Function to append html nested witin eachother to make a ul that can be clicked to correctly
+// Show the page that correspods with the correct li clicked
 
 function appendPageLinks(list) {
   const divPage = document.querySelector('.page');
-  const A = document.querySelectorAll('a');
-  for(let i = 0; A.length; i++){
-    A.addEventListener('click', (e) =>{
-      A.classList.remove('active');
-      event.target.classList.add('active');
-      const aContent = A.textContent;
-      showPage(listItem, aContent);
-      console.log('connected');
+  const div = document.createElement('div');
+  div.classList.add('pagination');
+  divPage.appendChild(div);
+  const ul = document.createElement('ul');
+  div.appendChild(ul);
+
+  for(let i = 1; i < list.length / maxStudents; i++) {
+    const li = document.createElement('li');
+    const aRef = document.createElement('a');
+    aRef.setAttribute('href', '#');
+    aRef.textContent = i;
+    li.appendChild(aRef);
+    ul.appendChild(li);
+  }
+
+  const aTag = document.querySelectorAll('a');
+  aTag[0].classList.add('active');
+  for(let j = 0; j < aTag.length; j++) {
+    ul.addEventListener('click', (e) => {
+      aTag[j].classList.remove('active');
+      e.target.classList.add('active');
+      showPage(listItem, e.target.textContent);
     });
   }
-  let html = `
-  <div class="pagination">
-    <ul>
-      <li>
-        <a class="active" href="#">1</a>
-      </li>
-       <li>
-        <a href="#">2</a>
-      </li>
-       <li>
-        <a href="#">3</a>
-      </li>
-       <li>
-        <a href="#">4</a>
-      </li>
-       <li>
-        <a href="#">5</a>
-      </li>
-    </ul>
-  </div>
-  `;
-divPage.innerHTML = html;
 }
+
+// Invoking the functions
 
 showPage(listItem, 1);
 appendPageLinks(listItem);
-
-/***
-   Create the `appendPageLinks function` to generate, append, and add
-   functionality to the pagination buttons.
-***/
-
-
-
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
