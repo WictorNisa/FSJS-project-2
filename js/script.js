@@ -29,7 +29,9 @@ function appendPageLinks(list) {
   const ul = document.createElement('ul');
   div.appendChild(ul);
 
-  for(let i = 1; i < list.length / maxStudents; i++) {
+  // Creating Li and a element, that gets appended to the page via a for loop
+  const pages = Math.ceil(list.length / maxStudents);
+  for(let i = 1; i < pages; i++) {
     const li = document.createElement('li');
     const aRef = document.createElement('a');
     aRef.setAttribute('href', '#');
@@ -38,16 +40,24 @@ function appendPageLinks(list) {
     ul.appendChild(li);
   }
 
+  // Iterating over all the A elements, adding the active class to the target clicked
+  // and removing it from all the other a elements
+
   const aTag = document.querySelectorAll('a');
   aTag[0].classList.add('active');
-  for(let j = 0; j < aTag.length; j++) {
-    ul.addEventListener('click', (e) => {
-      aTag[j].classList.remove('active');
-      e.target.classList.add('active');
-      showPage(listItem, e.target.textContent);
-    });
-  }
-}
+    for(let j = 0; j < aTag.length; j++) {
+      ul.addEventListener('click', (e) => {
+        // Checking to see if the target clicked is the link inside a li element
+        // if it isnt, nothing happens
+        if(e.target.hasAttribute('href')){
+          aTag[j].classList.remove('active');
+          e.target.classList.add('active');
+          showPage(listItem, e.target.textContent);
+          }
+        }),false;
+      }
+    }
+
 
 // Invoking the functions
 
